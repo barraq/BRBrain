@@ -8,7 +8,7 @@ The aim of this github repository is to centralize the code developped by the [N
 
 ## BrBrain Firmware
 
-The Firmware support both CM-5 and CM-510 platform.
+The Firmware has been updated and now supports both CM-5 and CM-510 platforms.
 
 [Northeastern University]: http://www.ccs.neu.edu/research/gpc/BRBrain/ "Northeastern University"
 [Bioloid]: http://www.robotis.com/xe/bioloid_en "Bioloid"
