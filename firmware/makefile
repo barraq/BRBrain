@@ -73,7 +73,7 @@ AVRDUDE_PORT = usb
 CSTANDARD = -std=gnu99
  
 # Place -D or -U options here
-CDEFS = -DINITIAL_RXD_BLUETOOTH $(CM)
+CDEFS = $(CM)
 
 # Place -I options here
 CINCS = -I/usr/local/avr/include
@@ -88,10 +88,12 @@ default:
 	@echo "building BrBrain firmware for $(MCU)..."
 	$(MAKE) clean
 	$(MAKE) all TARGET=$(TARGET)-initial-rs232
-	$(MAKE) clean
-	$(MAKE) all TARGET=$(TARGET)-initial-bt
 	@echo "done"
-
+	
+bluetooth:
+	$(MAKE) clean
+	$(MAKE) all TARGET=$(TARGET)-initial-bt CDEFS="$(CDEFS) -DINITIAL_RXD_BLUETOOTH"
+	
 realclean-all:
 	@echo "cleaning..."
 	$(MAKE) realclean TARGET=$(TARGET)-initial-rs232
