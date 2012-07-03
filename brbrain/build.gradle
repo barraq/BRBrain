@@ -2,10 +2,8 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 repositories {
+    mavenLocal()
     mavenCentral()
-    maven {
-    	url "http://repo2.maven.org/maven2"
-    }
 }
 
 dependencies {
