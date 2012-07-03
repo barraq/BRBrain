@@ -1,0 +1,12 @@
+# Gradle
+*.build.gradle.swp
+*.gradle
+
+# Eclipse
+*.classpath
+.project
+.settings/
+
+# Java
+build
+
