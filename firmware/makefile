@@ -1,13 +1,21 @@
 # Hey Emacs, this is a -*- makefile -*-
 
-cm5: MCU=atmega128
-cm510: MCU=atmega2561
-
-TARGET = $(notdir $(CURDIR))
+# common definition
+TARGET = brbrain
 SRC = $(wildcard *.c)
 ASRC = 
 OPT = s
-CPU_HZ = 16E6
+
+# CM dependent definition
+ifeq ($(cm),cm510)
+	MCU = atmega2561
+	CPU_HZ = 16E6
+	CM = -DCM510
+else
+	MCU = atmega128
+	CPU_HZ = 16E6
+	CM = -DCM5
+endif
 
 # set this nonzero to define the cpp symbol EN_DBG at compile time (this may be
 # used to enable runtime debug code, and is orthogonal to compiling with debug
@@ -65,7 +73,7 @@ AVRDUDE_PORT = usb
 CSTANDARD = -std=gnu99
  
 # Place -D or -U options here
-# CDEFS =
+CDEFS = -DINITIAL_RXD_BLUETOOTH $(CM)
 
 # Place -I options here
 CINCS = -I/usr/local/avr/include
@@ -76,15 +84,12 @@ CINCS = -I/usr/local/avr/include
 # broken until binutils-avr-2.17? http://lists.gnu.org/archive/html/avr-gcc-list/2006-08/msg00055.html
 # DCE = link-time 
 
-cm5: build
-cm510: build
-
-build:
+default:
 	@echo "building BrBrain firmware for $(MCU)..."
 	$(MAKE) clean
 	$(MAKE) all TARGET=$(TARGET)-initial-rs232
 	$(MAKE) clean
-	$(MAKE) all TARGET=$(TARGET)-initial-bt CDEFS=-DINITIAL_RXD_BLUETOOTH
+	$(MAKE) all TARGET=$(TARGET)-initial-bt
 	@echo "done"
 
 realclean-all:

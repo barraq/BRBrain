@@ -936,9 +936,9 @@ static void initHardware() {
   DDRA = DDRB = DDRC = DDRD = DDRE = DDRF = 0;  /* set all ports to input */
   PORTB = PORTC = PORTD = PORTE = PORTF = PORTG = 0x00;
 
-#if MCU == atmega128
+#if defined (CM5)
   SFIOR &= ~_BV(PUD); //enable pullups
-#elif MCU == atmega2561
+#elif defined(CM510)
   MCUCR &= ~_BV(PUD); //enable pullups
 #else
   #error "MCU has an unrecognized value."
@@ -1008,12 +1008,12 @@ static void initHardware() {
   UCSR1C = _BV(UCSZ11)|_BV(UCSZ10); /* 8N1 */
 
   /* counter 0 interrupt every ~10ms */
-#if MCU == atmega128
+#if defined(CM5)
   TCCR0 = _BV(WGM01); /* mode 2, Clear Timer on Compare match */
   TCCR0 |= _BV(CS02)|_BV(CS01)|_BV(CS00); /* divide by 1024 */
   TIMSK |= _BV(OCIE0); /* OCR interrupt enable */
   OCR0 = 156; /* 16M/1024 = 15625Hz; 15625/156 = 100.16Hz */
-#elif MCU == atmega2561
+#elif defined(CM510)
   TCCR0B = _BV(WGM01); /* mode 2, Clear Timer on Compare match */
   TCCR0B |= _BV(CS02)|_BV(CS01)|_BV(CS00); /* divide by 1024 */
   TIMSK0 |= _BV(OCIE0B); /* OCR interrupt enable */
@@ -1143,9 +1143,9 @@ static void readADCs() {
 }
 
 /* rx from dynamixel */
-#if MCU == atmega128
+#if defined(CM5)
   ISR(SIG_UART0_RECV) {
-#elif MCU == atmega2561
+#elif defined(CM510)
   ISR(SIG_USART0_RECV) {
 #else
   #error "MCU has an unrecognized value."
@@ -1163,9 +1163,9 @@ static void readADCs() {
 }
 
 /* tx buf to dynamixel empty */
-#if MCU == atmega128
+#if defined(CM5)
   ISR(SIG_UART0_DATA) {
-#elif MCU == atmega2561
+#elif defined(CM510)
   ISR(SIG_USART0_DATA) {
 #else
   #error "MCU has an unrecognized value."
@@ -1182,9 +1182,9 @@ static void readADCs() {
 }
 
 /* rx from PC */
-#if MCU == atmega128
+#if defined(CM5)
   ISR(SIG_UART1_RECV) {
-#elif MCU == atmega2561
+#elif defined(CM510)
   ISR(SIG_USART1_RECV) {
 #else
   #error "MCU has an unrecognized value."
@@ -1202,9 +1202,9 @@ static void readADCs() {
 }
 
 /* tx buf to pc empty */
-#if MCU == atmega128
+#if defined(CM5)
   ISR(SIG_UART1_DATA) {
-#elif MCU == atmega2561
+#elif defined(CM510)
   ISR(SIG_USART1_DATA) {
 #else
   #error "MCU has an unrecognized value."
@@ -1225,9 +1225,9 @@ static void readADCs() {
 }
 
 /** we get this interrupt every ~10 ms **/
-#if MCU == atmega128
+#if defined(CM5)
   ISR(SIG_OUTPUT_COMPARE0) {
-#elif MCU == atmega2561
+#elif defined(CM510)
   ISR(SIG_OUTPUT_COMPARE0A) {
 #else
   #error "MCU has an unrecognized value."

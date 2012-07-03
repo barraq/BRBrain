@@ -113,7 +113,7 @@ LDCEL = -Wl,--gc-sections
 
 #ASFLAGS = -Wa,-adhlns=$(<:.S=.lst),-gstabs 
 
-CFLAGS = $(CDEBUG) $(CDBG) $(CDEFS) $(CINCS) -O$(OPT) $(CWARN) $(CSTANDARD) -DF_CPU=$(CPU_HZ) -DSVN_VERSION=\"$(SVN_VERSION)\" -DBUILD_DATE=\"$(BUILD_DATE)\" $(CEXTRA)
+CFLAGS += $(CDEBUG) $(CDBG) $(CDEFS) $(CINCS) -O$(OPT) $(CWARN) $(CSTANDARD) -DF_CPU=$(CPU_HZ) -DSVN_VERSION=\"$(SVN_VERSION)\" -DBUILD_DATE=\"$(BUILD_DATE)\" $(CEXTRA)
 
 # used for "make depend"
 DEPENDFILE = makefile.depend
@@ -195,6 +195,7 @@ ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 
 # Default target.
 all: build
+	@echo $(CFLAGS)
 
 build: depend elf hex bin eep lss
 
