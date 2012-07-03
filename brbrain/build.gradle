@@ -3,4 +3,22 @@ apply plugin: 'eclipse'
 
 repositories {
     mavenCentral()
+    maven {
+    	url "http://repo2.maven.org/maven2"
+    }
+}
+
+dependencies {
+    compile group: 'org.rxtx', name: 'rxtx', version: '2.1.7'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/java'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
 }
