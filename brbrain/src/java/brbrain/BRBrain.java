@@ -22,7 +22,7 @@ package brbrain;
 
 import static brbrain.AX12Register.*;
 
-import javax.comm.*;
+import gnu.io.*;
 import java.util.*;
 import java.io.*;
 
