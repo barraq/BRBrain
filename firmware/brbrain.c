@@ -1014,10 +1014,10 @@ static void initHardware() {
   TIMSK |= _BV(OCIE0); /* OCR interrupt enable */
   OCR0 = 156; /* 16M/1024 = 15625Hz; 15625/156 = 100.16Hz */
 #elif defined(CM510)
-  TCCR0B = _BV(WGM01); /* mode 2, Clear Timer on Compare match */
-  TCCR0B |= _BV(CS02)|_BV(CS01)|_BV(CS00); /* divide by 1024 */
-  TIMSK0 |= _BV(OCIE0B); /* OCR interrupt enable */
-  OCR1A = 156; /* 16M/1024 = 15625Hz; 15625/156 = 100.16Hz */
+  TCCR0A = _BV(WGM01); /*Use mode 2, Clear Timer on Compare match */
+  TCCR0B |= _BV(CS02)|~_BV(CS01)|_BV(CS00); /* divide by 1024 */
+  TIMSK0 |= _BV(OCIE0A);/*OCRA interrupt enable,use the CCT and outPut compare match */
+  OCR0A = 156; /* 16M/1024 = 15625Hz; 15625/156 = 100.16Hz */
 #else
   #error "MCU has an unrecognized value."
 #endif
