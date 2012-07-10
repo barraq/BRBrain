@@ -1,5 +1,9 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+group = 'brbrain'
+version = '1.0'
 
 repositories {
     mavenLocal()
@@ -19,4 +23,25 @@ sourceSets {
             srcDir 'src/resources'
         }
     }
+}
+
+// Github Maven deployement
+
+def localMavenRepo = 'file://' + new File('../maven/').absolutePath
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: localMavenRepo)
+        }
+    }
+}
+
+task deploySnapshot(dependsOn: 'uploadArchives')
+task deployRelease(dependsOn: 'uploadArchives')
+
+gradle.taskGraph.whenReady { tg ->
+	if (tg.hasTask(':deploySnapshot')) {
+		version += '-SNAPSHOT'
+        }
 }
